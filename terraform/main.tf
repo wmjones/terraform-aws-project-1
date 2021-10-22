@@ -16,7 +16,7 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "vpc" {
+data "terraform_remote_state" "main" {
   backend = "remote"
   config = {
     organization = "wyatt-prod"
@@ -26,7 +26,11 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+provider "aws" {
+  region = data.terraform_remote_state.main.outputs.aws_region
+}
+
 output "test" {
   description = "The CIDR block of the VPC"
-  value       = data.terraform_remote_state.vpc.outputs.vpc_cidr_block
+  value       = data.terraform_remote_state.main.outputs.vpc_cidr_block
 }
