@@ -15,7 +15,7 @@ resource "aws_sagemaker_notebook_instance" "ni" {
 }
 
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
-  name     = "package_loader"
+  name     = "lc"
   on_start = <<EOT
   #!/bin/bash
   sudo -u ec2-user -i <<'EOF'
