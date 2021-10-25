@@ -33,7 +33,7 @@ locals {
 }
 
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
-  name     = "AWS-PROJECT-1-NOTEBOOK-LIFECYCLE"
+  name      = "AWS-PROJECT-1-NOTEBOOK-LIFECYCLE"
   on_create = base64encode(local.lifecycle_config)
 }
 
