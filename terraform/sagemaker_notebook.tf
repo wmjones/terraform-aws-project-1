@@ -11,11 +11,11 @@ resource "aws_sagemaker_notebook_instance" "ni" {
   role_arn                = "arn:aws:iam::761551243560:role/SageMakerFullAccess"
   instance_type           = "ml.t2.medium"
   default_code_repository = aws_sagemaker_code_repository.repo.code_repository_name
-  lifecycle_config_name = aws_sagemaker_notebook_instance_lifecycle_configuration.lc.name
+  lifecycle_config_name   = aws_sagemaker_notebook_instance_lifecycle_configuration.lc.name
 }
 
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
-  name = "package_loader"
+  name     = "package_loader"
   on_start = <<EOT
   #!/bin/bash
   sudo -u ec2-user -i <<'EOF'
