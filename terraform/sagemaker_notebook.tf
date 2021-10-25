@@ -6,17 +6,9 @@ resource "aws_sagemaker_code_repository" "repo" {
   }
 }
 
-resource "aws_sagemaker_notebook_instance" "ni" {
-  name                    = "terraform-aws-project-1"
-  role_arn                = "arn:aws:iam::761551243560:role/SageMakerFullAccess"
-  instance_type           = "ml.t2.medium"
-  default_code_repository = aws_sagemaker_code_repository.repo.code_repository_name
-  lifecycle_config_name   = aws_sagemaker_notebook_instance_lifecycle_configuration.lc.name
-}
-
 resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
   name     = "lc"
-  on_start = <<EOT
+  on_start = <<-EOT
   #!/bin/bash
   sudo -u ec2-user -i <<'EOF'
   
@@ -38,6 +30,13 @@ resource "aws_sagemaker_notebook_instance_lifecycle_configuration" "lc" {
   done
   
   EOF
-  )
-EOT
+  EOT
+}
+
+resource "aws_sagemaker_notebook_instance" "ni" {
+  name                    = "terraform-aws-project-1"
+  role_arn                = "arn:aws:iam::761551243560:role/SageMakerFullAccess"
+  instance_type           = "ml.t2.medium"
+  default_code_repository = aws_sagemaker_code_repository.repo.code_repository_name
+  lifecycle_config_name   = aws_sagemaker_notebook_instance_lifecycle_configuration.lc.name
 }
